@@ -1,0 +1,3107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AQUA CONNECT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #e8edf5;
+    --bg2: #dce4f0;
+    --white: #ffffff;
+    --blue: #2563EB;
+    --blue-light: #3b82f6;
+    --blue-dark: #1d4ed8;
+    --blue-pale: #eff6ff;
+    --blue-mid: #bfdbfe;
+    --text-dark: #0f172a;
+    --text-mid: #334155;
+    --text-light: #64748b;
+    --text-muted: #94a3b8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f97316;
+    --shadow-light: rgba(255,255,255,0.85);
+    --shadow-dark: rgba(163,177,198,0.65);
+    --neu-out: 6px 6px 14px var(--shadow-dark), -4px -4px 10px var(--shadow-light);
+    --neu-in: inset 4px 4px 8px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
+    --neu-card: 8px 8px 20px var(--shadow-dark), -5px -5px 12px var(--shadow-light);
+    --neu-btn: 5px 5px 12px var(--shadow-dark), -3px -3px 8px var(--shadow-light);
+    --neu-btn-press: inset 3px 3px 8px var(--shadow-dark), inset -2px -2px 6px var(--shadow-light);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --radius-xl: 28px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  body {
+    font-family:'Poppins',sans-serif;
+    background:var(--bg);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  /* ── Phone Shell ── */
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: var(--bg);
+    border-radius: 44px;
+    box-shadow: 20px 20px 60px rgba(163,177,198,0.8), -10px -10px 30px rgba(255,255,255,0.9);
+    position: relative;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.7);
+  }
+
+  /* ── Screens ── */
+  .screen {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    border-radius: 42px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: none;
+    flex-direction: column;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display:none; }
+  .screen.active { display: flex; }
+
+  /* ─────────────────────────────────
+     SPLASH SCREEN
+  ───────────────────────────────── */
+  #splash {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #dce8ff 0%, #e8f0fe 40%, #c7d9ff 100%);
+  }
+
+  .splash-inner {
+    text-align: center;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .splash-3d-wrap {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 8px;
+    position: relative;
+  }
+
+  .water-3d-scene {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .water-bubble-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6) 0%, rgba(147,197,253,0.4) 40%, rgba(37,99,235,0.15) 100%);
+    box-shadow: 0 0 60px rgba(37,99,235,0.3), inset 0 0 40px rgba(255,255,255,0.4);
+    animation: float3d 3s ease-in-out infinite;
+  }
+
+  .bottle-3d {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 90px;
+    height: 150px;
+  }
+
+  .bottle-3d-body {
+    width: 70px;
+    height: 110px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(147,210,255,0.7) 30%, rgba(59,130,246,0.5) 60%, rgba(37,99,235,0.4) 100%);
+    border-radius: 14px 14px 18px 18px;
+    margin: 28px auto 0;
+    position: relative;
+    box-shadow: inset -8px -8px 20px rgba(37,99,235,0.3), inset 5px 5px 15px rgba(255,255,255,0.7), 8px 8px 20px rgba(37,99,235,0.3);
+  }
+
+  .bottle-3d-neck {
+    width: 28px;
+    height: 22px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(147,197,253,0.8));
+    border-radius: 6px 6px 0 0;
+    margin: 0 auto;
+    box-shadow: inset -3px -3px 8px rgba(37,99,235,0.2), inset 2px 2px 5px rgba(255,255,255,0.8);
+  }
+
+  .bottle-3d-cap {
+    width: 22px;
+    height: 14px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    border-radius: 4px 4px 3px 3px;
+    margin: 0 auto;
+    box-shadow: 3px 3px 8px rgba(37,99,235,0.4);
+  }
+
+  .bottle-label {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 50px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .bottle-label-drop {
+    width: 14px;
+    height: 18px;
+    background: linear-gradient(to bottom, #60a5fa, #2563EB);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(180deg);
+  }
+
+  .bottle-label-text {
+    font-size: 6px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.5px;
+  }
+
+  .water-drops-3d {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .drop-3d {
+    position: absolute;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(147,210,255,0.6));
+    box-shadow: inset -2px -2px 4px rgba(37,99,235,0.3), inset 1px 1px 3px rgba(255,255,255,0.9);
+    animation: dropFloat 2.5s ease-in-out infinite;
+  }
+
+  .drop-3d:nth-child(1) { width:14px; height:18px; top:20%; left:15%; animation-delay:0s; }
+  .drop-3d:nth-child(2) { width:10px; height:13px; top:35%; right:18%; animation-delay:0.6s; }
+  .drop-3d:nth-child(3) { width:8px; height:10px; top:70%; left:20%; animation-delay:1.2s; }
+  .drop-3d:nth-child(4) { width:12px; height:15px; top:60%; right:15%; animation-delay:1.8s; }
+  .drop-3d:nth-child(5) { width:6px; height:8px; top:15%; right:30%; animation-delay:0.9s; }
+
+  @keyframes float3d {
+    0%,100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.04) rotate(2deg); }
+  }
+
+  @keyframes dropFloat {
+    0%,100% { transform: translateY(0) rotate(180deg); opacity: 0.8; }
+    50% { transform: translateY(-12px) rotate(180deg); opacity: 1; }
+  }
+
+  .splash-logo-text {
+    font-size: 34px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #1d4ed8, #2563EB, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    text-shadow: none;
+  }
+
+  .splash-tagline {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-bottom: 36px;
+  }
+
+  .splash-wave {
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, var(--blue-light), transparent);
+    border-radius: 3px;
+    margin-bottom: 36px;
+    animation: waveShimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes waveShimmer {
+    0%,100% { opacity: 0.4; transform: scaleX(0.6); }
+    50% { opacity: 1; transform: scaleX(1); }
+  }
+
+  .splash-role-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-mid);
+    margin-bottom: 16px;
+  }
+
+  .splash-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .splash-btn {
+    padding: 16px 28px;
+    border-radius: var(--radius);
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-customer {
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    color: #fff;
+    box-shadow: 6px 6px 16px rgba(37,99,235,0.4), -3px -3px 10px rgba(255,255,255,0.8);
+  }
+  .btn-customer:active { transform: scale(0.97); }
+
+  .btn-vendor {
+    background: var(--bg);
+    color: var(--blue);
+    box-shadow: var(--neu-btn);
+    border: 2px solid rgba(37,99,235,0.15);
+  }
+  .btn-vendor:active { box-shadow: var(--neu-btn-press); }
+
+  /* ─────────────────────────────────
+     LOGIN / SIGNUP
+  ───────────────────────────────── */
+  #login, #signup {
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  .auth-top {
+    background: linear-gradient(145deg, #dce8ff, #c7d9ff);
+    padding: 60px 32px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .auth-top::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    top: -60px; right: -60px;
+  }
+
+  .auth-top::after {
+    content: '';
+    position: absolute;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(37,99,235,0.1);
+    bottom: -40px; left: -40px;
+  }
+
+  .auth-logo-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--bg);
+    border-radius: 22px;
+    box-shadow: var(--neu-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo-drop {
+    width: 32px;
+    height: 40px;
+    background: linear-gradient(to bottom, #60a5fa, #2563EB);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(180deg);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.4);
+  }
+
+  .auth-logo-name {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 1px;
+  }
+
+  .auth-subtitle {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .auth-body {
+    padding: 28px 24px 32px;
+    flex: 1;
+    background: var(--bg);
+  }
+
+  .auth-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+
+  .auth-hint {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+    box-shadow: var(--neu-in);
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .form-input:focus {
+    box-shadow: var(--neu-in), 0 0 0 2px rgba(37,99,235,0.3);
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--blue);
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 6px 6px 16px rgba(37,99,235,0.4), -3px -3px 10px rgba(255,255,255,0.7);
+    transition: all 0.2s;
+    margin-top: 8px;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  .auth-switch a {
+    color: var(--blue);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--blue-mid));
+  }
+  .divider::after { background: linear-gradient(to left, transparent, var(--blue-mid)); }
+
+  .divider span {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ─────────────────────────────────
+     TOP NAV (shared)
+  ───────────────────────────────── */
+  .topbar {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 50;
+  }
+
+  .topbar-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  .icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    box-shadow: var(--neu-btn);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-mid);
+    font-size: 18px;
+    position: relative;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .icon-btn:active { box-shadow: var(--neu-btn-press); }
+
+  .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    background: var(--blue);
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg);
+  }
+
+  /* ─────────────────────────────────
+     BOTTOM NAV
+  ───────────────────────────────── */
+  .bottom-nav {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg);
+    padding: 8px 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 -4px 20px rgba(163,177,198,0.4);
+    z-index: 50;
+    border-radius: 0 0 40px 40px;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    min-width: 56px;
+  }
+
+  .nav-item span { font-size: 10px; font-weight: 500; color: var(--text-muted); }
+  .nav-item svg { width: 22px; height: 22px; fill: none; stroke: var(--text-muted); stroke-width: 2; }
+  .nav-item.active span { color: var(--blue); font-weight: 600; }
+  .nav-item.active svg { stroke: var(--blue); }
+
+  .nav-center {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(37,99,235,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    cursor: pointer;
+    margin-top: -16px;
+    border: 3px solid var(--bg);
+    flex-shrink: 0;
+  }
+
+  .nav-center svg { width: 26px; height: 26px; fill: white; stroke: none; }
+
+  /* ─────────────────────────────────
+     HOME SCREEN
+  ───────────────────────────────── */
+  #home { padding-bottom: 0; }
+
+  .home-header {
+    padding: 16px 20px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .home-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+    box-shadow: var(--neu-btn);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .home-greeting h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+  .home-greeting p { font-size: 12px; color: var(--text-light); }
+
+  /* Hero Banner */
+  .hero-banner {
+    margin: 12px 16px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, #dce8ff 0%, #c7d9ff 50%, #bfdbfe 100%);
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--neu-card);
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-content {
+    flex: 1;
+    z-index: 2;
+    position: relative;
+  }
+
+  .hero-content h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+
+  .hero-content h2 span {
+    color: var(--blue);
+  }
+
+  .hero-content p {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+
+  .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 4px 4px 12px rgba(37,99,235,0.4);
+    border: none;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .hero-image-wrap {
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    width: 180px;
+    height: 200px;
+    z-index: 1;
+  }
+
+  .hero-bottle-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 3D Bottle SVG for hero */
+  .hero-water-bottle {
+    position: relative;
+    width: 130px;
+    height: 190px;
+    margin: 0 auto;
+  }
+
+  /* Quick Order */
+  .section-header {
+    padding: 16px 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  .see-all {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .bottle-row {
+    display: flex;
+    gap: 12px;
+    padding: 4px 20px 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .bottle-row::-webkit-scrollbar { display: none; }
+
+  .bottle-card {
+    min-width: 90px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 16px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+  }
+
+  .bottle-card.selected {
+    border-color: var(--blue);
+    box-shadow: var(--neu-btn-press), 0 0 0 2px rgba(37,99,235,0.2);
+  }
+
+  .bottle-card .check {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    background: var(--blue);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    box-shadow: 2px 2px 6px rgba(37,99,235,0.4);
+  }
+
+  .bottle-card.selected .check { display: flex; }
+  .bottle-card { position: relative; }
+
+  .bottle-img-wrap {
+    width: 52px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottle-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bottle-size { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+  .bottle-price { font-size: 12px; font-weight: 600; color: var(--blue); }
+
+  /* Info Cards */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 4px 20px 12px;
+  }
+
+  .info-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 16px;
+  }
+
+  .info-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .info-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--blue-pale);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--blue);
+    box-shadow: 2px 2px 6px rgba(163,177,198,0.4), -1px -1px 4px rgba(255,255,255,0.8);
+  }
+
+  .info-label { font-size: 11px; font-weight: 600; color: var(--text-light); }
+  .info-value { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+  .info-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Order card on home */
+  .my-orders-card {
+    margin: 0 16px 16px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .my-orders-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .my-orders-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--blue-pale);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 8px rgba(163,177,198,0.4), -2px -2px 6px rgba(255,255,255,0.8);
+  }
+
+  /* ─────────────────────────────────
+     ORDER SCREEN
+  ───────────────────────────────── */
+  #order { padding-bottom: 0; }
+
+  .order-content { padding: 0 16px; flex: 1; }
+
+  .address-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .addr-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--blue-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .addr-info { flex: 1; }
+  .addr-info strong { font-size: 14px; font-weight: 700; color: var(--text-dark); display: block; }
+  .addr-info span { font-size: 12px; color: var(--text-light); }
+
+  .change-btn {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .section-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+  }
+
+  /* Quantity selector */
+  .qty-section {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .qty-label { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .qty-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: none;
+    box-shadow: var(--neu-btn);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-mid);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.15s;
+  }
+  .qty-btn:active { box-shadow: var(--neu-btn-press); }
+
+  .qty-num { font-size: 18px; font-weight: 700; color: var(--text-dark); min-width: 24px; text-align: center; }
+
+  .qty-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .total-label { font-size: 11px; color: var(--text-muted); }
+  .total-val { font-size: 20px; font-weight: 800; color: var(--blue); }
+
+  /* Add-ons */
+  .addon-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .addon-img {
+    width: 52px;
+    height: 52px;
+    background: var(--blue-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .addon-info { flex: 1; }
+  .addon-info strong { font-size: 14px; font-weight: 700; color: var(--text-dark); display: block; }
+  .addon-info .addon-price { font-size: 13px; font-weight: 600; color: var(--blue); }
+  .addon-info small { font-size: 11px; color: var(--text-muted); display: block; }
+
+  .checkbox-neu {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--bg);
+    box-shadow: var(--neu-in);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .checkbox-neu.checked {
+    background: var(--blue);
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.2);
+    color: #fff;
+    font-size: 12px;
+  }
+
+  /* Delivery instructions */
+  .instructions-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .instructions-card textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+    resize: none;
+    height: 44px;
+    line-height: 1.5;
+  }
+
+  .instructions-card textarea::placeholder { color: var(--text-muted); }
+
+  /* Schedule */
+  .schedule-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .schedule-option {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+
+  .schedule-option.selected {
+    border-color: var(--blue);
+    box-shadow: var(--neu-btn-press), 0 0 0 1px rgba(37,99,235,0.15);
+  }
+
+  .schedule-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--blue-pale);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .schedule-text strong { font-size: 13px; font-weight: 700; color: var(--text-dark); display: block; }
+  .schedule-text small { font-size: 10px; color: var(--text-muted); }
+
+  .schedule-radio {
+    margin-left: auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: var(--neu-in);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .schedule-radio-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.2s;
+  }
+
+  .schedule-option.selected .schedule-radio-dot { background: var(--blue); }
+
+  /* Bill Summary */
+  .bill-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+
+  .bill-title { font-size: 15px; font-weight: 700; color: var(--text-dark); margin-bottom: 14px; }
+
+  .bill-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+
+  .bill-divider { height: 1px; background: var(--blue-mid); margin: 12px 0; opacity: 0.5; }
+
+  .bill-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  .bill-total span:last-child { color: var(--blue); }
+
+  /* Place order bar */
+  .order-bar {
+    padding: 12px 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg);
+    position: sticky;
+    bottom: 0;
+  }
+
+  .secure-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .secure-badge span:first-child {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-mid);
+  }
+  .secure-badge span:last-child {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .place-order-btn {
+    flex: 1;
+    padding: 16px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 6px 6px 16px rgba(37,99,235,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .place-order-btn:active { transform: scale(0.97); }
+
+  /* ─────────────────────────────────
+     ORDERS SCREEN
+  ───────────────────────────────── */
+  .filter-tabs {
+    display: flex;
+    gap: 0;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-in);
+    padding: 4px;
+    margin: 0 16px 16px;
+  }
+
+  .filter-tab {
+    flex: 1;
+    padding: 10px 4px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s;
+  }
+
+  .filter-tab.active {
+    background: var(--bg);
+    box-shadow: var(--neu-btn);
+    color: var(--blue);
+  }
+
+  .order-list { padding: 0 16px; }
+
+  .order-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .order-card:active { transform: scale(0.98); }
+
+  .order-bottle-thumb {
+    width: 72px;
+    height: 90px;
+    background: linear-gradient(135deg, #dce8ff, #c7d9ff);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .order-bottle-label {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    background: rgba(255,255,255,0.9);
+    padding: 2px 6px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .order-details { flex: 1; min-width: 0; }
+
+  .order-id-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .order-id { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+
+  .status-badge {
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .status-upcoming { background: rgba(37,99,235,0.12); color: var(--blue); }
+  .status-completed { background: rgba(34,197,94,0.12); color: var(--green); }
+  .status-cancelled { background: rgba(239,68,68,0.12); color: var(--red); }
+
+  .order-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-mid);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .order-addr { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+
+  .order-footer { font-size: 12px; color: var(--text-light); }
+  .order-footer strong { color: var(--text-dark); font-weight: 700; }
+
+  .order-arrow {
+    position: absolute;
+    right: 14px;
+    bottom: 16px;
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+
+  /* Help bar */
+  .help-bar {
+    margin: 4px 16px 16px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .help-left { display: flex; align-items: center; gap: 12px; }
+  .help-icon { font-size: 20px; color: var(--text-light); }
+  .help-left strong { font-size: 14px; font-weight: 700; color: var(--text-dark); display: block; }
+  .help-left small { font-size: 11px; color: var(--text-muted); }
+
+  .contact-btn {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ─────────────────────────────────
+     WALLET SCREEN
+  ───────────────────────────────── */
+  .wallet-hero {
+    margin: 12px 16px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563EB 50%, #3b82f6 100%);
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 8px 8px 24px rgba(37,99,235,0.4), -4px -4px 12px rgba(255,255,255,0.6);
+  }
+
+  .wallet-hero::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    right: -60px; top: -60px;
+  }
+
+  .wallet-hero::after {
+    content: '';
+    position: absolute;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    right: 30px; bottom: -30px;
+  }
+
+  .wallet-label { font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .wallet-amount { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: -1px; margin: 4px 0 6px; }
+  .wallet-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 20px; }
+
+  .wallet-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.95);
+    color: var(--blue);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+  }
+
+  .wallet-3d-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 72px;
+    opacity: 0.9;
+    z-index: 1;
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.2));
+  }
+
+  .wallet-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 14px;
+  }
+
+  .wallet-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .wallet-action-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--bg);
+    border-radius: 14px;
+    box-shadow: var(--neu-btn);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .wallet-action span {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-mid);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Promo banner */
+  .promo-banner {
+    margin: 0 16px 14px;
+    background: linear-gradient(135deg, #eff6ff, #dce8ff);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .promo-banner .close-btn {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .promo-text strong { font-size: 13px; font-weight: 600; color: var(--text-mid); display: block; }
+  .promo-text span { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+
+  /* Transactions */
+  .txn-list { padding: 0 16px; }
+
+  .txn-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .txn-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--blue-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 3px 3px 8px rgba(163,177,198,0.4), -2px -2px 6px rgba(255,255,255,0.8);
+  }
+
+  .txn-info { flex: 1; min-width: 0; }
+  .txn-info strong { font-size: 13px; font-weight: 700; color: var(--text-dark); display: block; }
+  .txn-info .txn-sub { font-size: 11px; color: var(--text-muted); }
+
+  .txn-amount { text-align: right; }
+  .txn-amount .amt { font-size: 15px; font-weight: 800; }
+  .txn-amount .amt.credit { color: var(--green); }
+  .txn-amount .amt.debit { color: var(--red); }
+  .txn-amount .txn-status { font-size: 10px; font-weight: 600; color: var(--green); display: flex; align-items: center; justify-content: flex-end; gap: 3px; }
+
+  /* Invite card */
+  .invite-card {
+    margin: 4px 16px 16px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .invite-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+  .invite-icon { font-size: 28px; }
+  .invite-left strong { font-size: 13px; font-weight: 700; color: var(--text-dark); display: block; }
+  .invite-left small { font-size: 11px; color: var(--text-muted); }
+
+  .invite-btn {
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 2px solid var(--blue);
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: var(--neu-btn);
+  }
+
+  /* ─────────────────────────────────
+     PROFILE SCREEN
+  ───────────────────────────────── */
+  .profile-card {
+    margin: 4px 16px 16px;
+    background: var(--bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--neu-card);
+    padding: 20px;
+  }
+
+  .profile-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(191,219,254,0.4);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .profile-avatar-wrap {
+    position: relative;
+  }
+
+  .profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+    box-shadow: var(--neu-btn);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    overflow: hidden;
+  }
+
+  .profile-cam {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #fff;
+    border: 2px solid var(--bg);
+  }
+
+  .profile-info { flex: 1; }
+  .profile-info h3 { font-size: 17px; font-weight: 800; color: var(--text-dark); }
+  .profile-info p { font-size: 12px; color: var(--text-light); }
+
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(37,99,235,0.1);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 50px;
+    margin-top: 4px;
+  }
+
+  .profile-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: var(--bg);
+    border-radius: 8px;
+    box-shadow: var(--neu-btn);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-item { text-align: center; padding: 4px; }
+  .stat-icon { width: 36px; height: 36px; border-radius: 12px; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; box-shadow: 2px 2px 6px rgba(163,177,198,0.4), -1px -1px 4px rgba(255,255,255,0.8); font-size: 16px; }
+  .stat-label { font-size: 9px; color: var(--text-muted); font-weight: 500; }
+  .stat-value { font-size: 13px; font-weight: 800; color: var(--text-dark); }
+
+  /* Addresses */
+  .addresses-section { margin: 0 16px 14px; }
+  .section-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+
+  .addr-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .addr-house-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--blue-pale);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 6px rgba(163,177,198,0.4), -1px -1px 4px rgba(255,255,255,0.8);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .addr-card-info { flex: 1; }
+  .addr-card-info strong { font-size: 13px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 6px; }
+  .addr-card-info span { font-size: 11px; color: var(--text-muted); display: block; }
+
+  .default-tag { font-size: 9px; font-weight: 700; background: rgba(37,99,235,0.1); color: var(--blue); padding: 2px 7px; border-radius: 50px; }
+
+  .add-address-btn {
+    width: 100%;
+    background: var(--bg);
+    border: 2px dashed rgba(37,99,235,0.3);
+    border-radius: var(--radius);
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    cursor: pointer;
+    box-shadow: var(--neu-card);
+    margin-bottom: 14px;
+  }
+
+  /* Menu list */
+  .menu-card {
+    background: var(--bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--neu-card);
+    overflow: hidden;
+    margin: 0 16px 14px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .menu-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 68px;
+    right: 16px;
+    height: 1px;
+    background: rgba(191,219,254,0.35);
+  }
+
+  .menu-item:active { background: rgba(37,99,235,0.04); }
+
+  .menu-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--blue-pale);
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 2px 2px 6px rgba(163,177,198,0.4), -1px -1px 4px rgba(255,255,255,0.8);
+    flex-shrink: 0;
+  }
+
+  .menu-label { flex: 1; font-size: 14px; font-weight: 600; color: var(--text-dark); }
+
+  .menu-badge {
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(34,197,94,0.15);
+    color: var(--green);
+    padding: 3px 8px;
+    border-radius: 50px;
+  }
+
+  .menu-arrow { color: var(--text-muted); font-size: 14px; }
+
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: calc(100% - 32px);
+    margin: 4px 16px 16px;
+    padding: 14px;
+    background: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    cursor: pointer;
+  }
+
+  /* ─────────────────────────────────
+     VENDOR LISTING (bonus screen)
+  ───────────────────────────────── */
+  #vendors { padding-bottom: 0; }
+
+  .vendor-filter-row {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .vendor-filter-row::-webkit-scrollbar { display: none; }
+
+  .vendor-filter-chip {
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: var(--bg);
+    box-shadow: var(--neu-btn);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-mid);
+    cursor: pointer;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .vendor-filter-chip.active {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: var(--blue-pale);
+    box-shadow: none;
+  }
+
+  .nearby-section { padding: 0 16px 8px; }
+  .nearby-label { font-size: 13px; font-weight: 600; color: var(--text-light); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+  .vendor-card {
+    background: var(--bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--neu-card);
+    padding: 16px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .vendor-card:active { transform: scale(0.98); }
+
+  .vendor-card-top { display: flex; gap: 14px; margin-bottom: 12px; }
+
+  .vendor-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, #dce8ff, #bfdbfe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: var(--neu-btn);
+    flex-shrink: 0;
+  }
+
+  .vendor-meta { flex: 1; }
+  .vendor-meta h4 { font-size: 15px; font-weight: 800; color: var(--text-dark); margin-bottom: 3px; }
+
+  .vendor-dist { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+
+  .vendor-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .vendor-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 50px;
+    background: var(--blue-pale);
+    color: var(--blue);
+  }
+
+  .vendor-tag.green { background: rgba(34,197,94,0.12); color: var(--green); }
+  .vendor-tag.orange { background: rgba(249,115,22,0.12); color: var(--orange); }
+
+  .vendor-stats { display: flex; gap: 0; }
+
+  .vstat {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    border-right: 1px solid rgba(191,219,254,0.4);
+    background: var(--blue-pale);
+    border-radius: 0;
+  }
+  .vstat:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+  .vstat:last-child { border-right: none; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+
+  .vstat-val { font-size: 14px; font-weight: 800; color: var(--blue); }
+  .vstat-label { font-size: 9px; font-weight: 500; color: var(--text-muted); }
+
+  /* Prices comparison */
+  .price-compare {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(191,219,254,0.3);
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .price-compare::-webkit-scrollbar { display: none; }
+
+  .price-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    box-shadow: var(--neu-btn);
+    flex-shrink: 0;
+  }
+
+  .price-pill-size { font-size: 10px; font-weight: 600; color: var(--text-muted); }
+  .price-pill-amt { font-size: 13px; font-weight: 800; color: var(--blue); }
+
+  /* Stock indicator */
+  .stock-row { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+  .stock-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .stock-dot.in { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.5); }
+  .stock-dot.low { background: var(--orange); box-shadow: 0 0 6px rgba(249,115,22,0.5); }
+  .stock-dot.out { background: var(--red); }
+  .stock-text { font-size: 11px; font-weight: 600; color: var(--text-mid); }
+
+  /* ─────────────────────────────────
+     SUCCESS TOAST
+  ───────────────────────────────── */
+  .toast {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ─────────────────────────────────
+     VENDOR (Vendor dashboard)
+  ───────────────────────────────── */
+  #vendor-dash { padding-bottom: 0; }
+
+  .vendor-dash-hero {
+    margin: 12px 16px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, #1d4ed8, #2563EB);
+    padding: 20px;
+    color: #fff;
+    box-shadow: 8px 8px 24px rgba(37,99,235,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vendor-dash-hero::before {
+    content: '';
+    position: absolute;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    top: -50px; right: -50px;
+  }
+
+  .vendor-dash-hero h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .vendor-dash-hero p { font-size: 12px; opacity: 0.8; margin-bottom: 16px; }
+
+  .vendor-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 0 16px 14px;
+  }
+
+  .vendor-stat-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: var(--neu-card);
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .vendor-stat-card .v-num { font-size: 22px; font-weight: 800; color: var(--blue); }
+  .vendor-stat-card .v-lbl { font-size: 10px; font-weight: 500; color: var(--text-muted); }
+
+  .stock-manager {
+    margin: 0 16px 14px;
+    background: var(--bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--neu-card);
+    padding: 18px;
+  }
+
+  .stock-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(191,219,254,0.3);
+  }
+  .stock-item:last-child { border-bottom: none; }
+
+  .stock-item-left { display: flex; align-items: center; gap: 12px; }
+  .stock-item-size { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+  .stock-item-price { font-size: 12px; color: var(--text-muted); }
+
+  .stock-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .toggle-switch {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: var(--bg);
+    box-shadow: var(--neu-in);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .toggle-switch.on {
+    background: var(--blue);
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: all 0.3s;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .toggle-switch.on .toggle-thumb { left: 23px; }
+
+  /* ── Scrollable area padding ── */
+  .scroll-pad { padding-bottom: 80px; }
+
+  /* ── Tiny SVG icons ── */
+  svg.ic { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  svg.ic-sm { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  svg.ic-fill { width:20px; height:20px; fill:currentColor; stroke:none; }
+
+  /* Rating stars */
+  .stars { color: #f59e0b; font-size: 12px; letter-spacing: 1px; }
+
+  /* Delivery estimate */
+  .eta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(34,197,94,0.12);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 50px;
+  }
+
+  /* Review snippet */
+  .review-snippet {
+    background: rgba(37,99,235,0.05);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-mid);
+    font-style: italic;
+    border-left: 3px solid var(--blue-mid);
+  }
+
+  /* Cart buttons */
+  .vendor-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .btn-outline {
+    padding: 10px;
+    border: 2px solid var(--blue);
+    border-radius: var(--radius-sm);
+    background: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-filled-sm {
+    padding: 10px;
+    background: linear-gradient(135deg, #2563EB, #1d4ed8);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 3px 3px 10px rgba(37,99,235,0.4);
+  }
+
+  /* Notification dot */
+  .notif-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--blue);
+    border-radius: 50%;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    box-shadow: 0 0 6px rgba(37,99,235,0.5);
+  }
+
+  /* Shimmer loading effect */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- ════════════════════════════════
+       SPLASH SCREEN
+  ════════════════════════════════ -->
+  <div class="screen active" id="splash">
+    <div class="splash-inner">
+
+      <!-- 3D Water Bottle Scene -->
+      <div class="splash-3d-wrap">
+        <div class="water-3d-scene">
+          <div class="water-bubble-bg"></div>
+
+          <!-- Floating water drops -->
+          <div class="water-drops-3d">
+            <div class="drop-3d"></div>
+            <div class="drop-3d"></div>
+            <div class="drop-3d"></div>
+            <div class="drop-3d"></div>
+            <div class="drop-3d"></div>
+          </div>
+
+          <!-- 3D Bottle -->
+          <div class="bottle-3d">
+            <div class="bottle-3d-cap"></div>
+            <div class="bottle-3d-neck"></div>
+            <div class="bottle-3d-body">
+              <div class="bottle-label">
+                <div class="bottle-label-drop"></div>
+                <div class="bottle-label-text">AQUA<br>CONNECT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logo Text -->
+      <div class="splash-logo-text">AQUA CONNECT</div>
+      <div class="splash-tagline">Pure Water • Delivered to You</div>
+
+      <div class="splash-wave"></div>
+
+      <div class="splash-role-title">Continue as</div>
+
+      <div class="splash-btns">
+        <button class="splash-btn btn-customer" onclick="goTo('login')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Customer
+        </button>
+        <button class="splash-btn btn-vendor" onclick="goTo('vendor-dash')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Vendor / Partner
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       LOGIN SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="login">
+    <div class="auth-top">
+      <div class="auth-logo-icon">
+        <div class="logo-drop"></div>
+      </div>
+      <div class="auth-logo-name">AQUA CONNECT</div>
+      <div class="auth-subtitle">Safe. Clean. Refreshing.</div>
+    </div>
+
+    <div class="auth-body scroll-pad">
+      <div class="auth-title">Welcome Back! 👋</div>
+      <div class="auth-hint">Sign in to your account to continue</div>
+
+      <div class="form-group">
+        <label class="form-label">Phone / Email</label>
+        <div class="input-wrap">
+          <svg class="input-icon ic" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.76h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4A16 16 0 0 0 14 16.53l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <input type="text" class="form-input" placeholder="+91 98765 43210" value="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <svg class="input-icon ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" class="form-input" placeholder="Enter password" value="••••••••">
+        </div>
+      </div>
+
+      <div style="text-align:right; margin-bottom: 16px;">
+        <a style="font-size:12px; color:var(--blue); font-weight:600; cursor:pointer;">Forgot Password?</a>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('home')">
+        Sign In
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+
+      <div class="divider"><span>or continue with</span></div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+        <button style="padding:12px; background:var(--bg); border:none; border-radius:var(--radius-sm); box-shadow:var(--neu-btn); font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; color:var(--text-mid); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <span style="font-size:18px;">G</span> Google
+        </button>
+        <button style="padding:12px; background:var(--bg); border:none; border-radius:var(--radius-sm); box-shadow:var(--neu-btn); font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; color:var(--text-mid); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+          📱 OTP
+        </button>
+      </div>
+
+      <div class="auth-switch">
+        New here? <a onclick="goTo('signup')">Create Account</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       SIGNUP SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="signup">
+    <div class="auth-top">
+      <div class="auth-logo-icon">
+        <div class="logo-drop"></div>
+      </div>
+      <div class="auth-logo-name">AQUA CONNECT</div>
+      <div class="auth-subtitle">Join thousands of happy customers</div>
+    </div>
+
+    <div class="auth-body scroll-pad">
+      <div class="auth-title">Create Account ✨</div>
+      <div class="auth-hint">Fill in your details to get started</div>
+
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <div class="input-wrap">
+          <svg class="input-icon ic" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" class="form-input" placeholder="Rahul Sharma">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <div class="input-wrap">
+          <svg class="input-icon ic" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.76h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4A16 16 0 0 0 14 16.53l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <input type="tel" class="form-input" placeholder="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email (Optional)</label>
+        <div class="input-wrap">
+          <svg class="input-icon ic" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <input type="email" class="form-input" placeholder="rahul@email.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <svg class="input-icon ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input type="password" class="form-input" placeholder="Create password">
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('home')" style="margin-top:8px;">
+        Create Account
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+
+      <div class="auth-switch" style="margin-top:16px;">
+        Already have an account? <a onclick="goTo('login')">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       HOME SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="home">
+    <div class="scroll-pad">
+      <!-- Header -->
+      <div class="home-header">
+        <div class="home-user">
+          <div class="avatar">🧑</div>
+          <div class="home-greeting">
+            <h2>Hello, Rahul 👋</h2>
+            <p>Stay hydrated, stay healthy.</p>
+          </div>
+        </div>
+        <button class="icon-btn" onclick="showToast('🔔 No new notifications')">
+          <div class="notif-dot"></div>
+          <svg class="ic" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+      </div>
+
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <h2>Pure Water<br><span>Delivered to You</span></h2>
+          <p>Safe. Clean. Refreshing.</p>
+          <button class="hero-btn" onclick="goTo('order')">
+            Order Now
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Hero 3D Bottle SVG -->
+        <div class="hero-image-wrap">
+          <svg viewBox="0 0 130 200" class="hero-bottle-svg" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cap -->
+            <rect x="48" y="2" width="34" height="16" rx="5" fill="#1d4ed8"/>
+            <rect x="51" y="2" width="28" height="4" rx="3" fill="#3b82f6" opacity="0.6"/>
+            <!-- Neck -->
+            <rect x="44" y="17" width="42" height="20" rx="6" fill="url(#neckGrad)"/>
+            <!-- Body -->
+            <rect x="20" y="36" width="90" height="148" rx="16" fill="url(#bodyGrad)"/>
+            <!-- Water fill -->
+            <rect x="22" y="100" width="86" height="82" rx="14" fill="url(#waterGrad)" opacity="0.5"/>
+            <!-- Label -->
+            <rect x="32" y="60" width="66" height="70" rx="8" fill="rgba(255,255,255,0.85)"/>
+            <!-- Drop on label -->
+            <ellipse cx="65" cy="82" rx="10" ry="13" fill="url(#dropGrad)" transform="rotate(180,65,82)"/>
+            <!-- Label text representation -->
+            <rect x="40" y="102" width="50" height="4" rx="2" fill="#2563EB" opacity="0.4"/>
+            <rect x="45" y="110" width="40" height="3" rx="1.5" fill="#2563EB" opacity="0.3"/>
+            <!-- Shine highlight -->
+            <rect x="26" y="42" width="18" height="80" rx="9" fill="rgba(255,255,255,0.35)"/>
+            <!-- Water drops around -->
+            <ellipse cx="16" cy="80" rx="6" ry="8" fill="rgba(147,197,253,0.7)" transform="rotate(180,16,80)"/>
+            <ellipse cx="114" cy="110" rx="5" ry="6" fill="rgba(147,197,253,0.7)" transform="rotate(180,114,110)"/>
+            <ellipse cx="18" cy="130" rx="4" ry="5" fill="rgba(147,197,253,0.6)" transform="rotate(180,18,130)"/>
+            <ellipse cx="112" cy="60" rx="5" ry="7" fill="rgba(147,197,253,0.6)" transform="rotate(180,112,60)"/>
+            <ellipse cx="105" cy="150" rx="3" ry="4" fill="rgba(147,197,253,0.5)" transform="rotate(180,105,150)"/>
+            <defs>
+              <linearGradient id="neckGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/>
+                <stop offset="60%" stop-color="rgba(147,197,253,0.8)"/>
+                <stop offset="100%" stop-color="rgba(59,130,246,0.6)"/>
+              </linearGradient>
+              <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.95)"/>
+                <stop offset="30%" stop-color="rgba(191,219,254,0.8)"/>
+                <stop offset="70%" stop-color="rgba(96,165,250,0.5)"/>
+                <stop offset="100%" stop-color="rgba(37,99,235,0.4)"/>
+              </linearGradient>
+              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="rgba(147,197,253,0.8)"/>
+                <stop offset="100%" stop-color="rgba(37,99,235,0.6)"/>
+              </linearGradient>
+              <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#60a5fa"/>
+                <stop offset="100%" stop-color="#2563EB"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Quick Order -->
+      <div class="section-header">
+        <span class="section-title">Quick Order</span>
+        <button class="see-all" onclick="goTo('vendors')">See All</button>
+      </div>
+
+      <div class="bottle-row" id="homeBottles"></div>
+
+      <!-- Info Grid -->
+      <div class="info-grid" style="margin-top:4px;">
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-icon">📅</div>
+            <span class="info-label">Next Delivery</span>
+          </div>
+          <div class="info-value">24 May, 2024</div>
+          <div class="info-sub">10:00 AM – 12:00 PM</div>
+        </div>
+        <div class="info-card" onclick="goTo('profile')">
+          <div class="info-card-header">
+            <div class="info-icon">📍</div>
+            <span class="info-label">Delivery Address</span>
+          </div>
+          <div class="info-value">Home</div>
+          <div class="info-sub" style="font-size:10px;">123, Green Park,<br>New Delhi - 110016</div>
+        </div>
+      </div>
+
+      <!-- My Orders -->
+      <div class="my-orders-card" onclick="goTo('orders')">
+        <div class="my-orders-left">
+          <div class="my-orders-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#2563EB"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" stroke="white" stroke-width="2"/><path d="M16 10a4 4 0 0 1-8 0" stroke="white" stroke-width="2" fill="none"/></svg>
+          </div>
+          <div>
+            <div style="font-size:14px; font-weight:700; color:var(--text-dark);">My Orders</div>
+            <div style="font-size:11px; color:var(--text-muted);">View your past orders</div>
+          </div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <!-- Nearby Vendors preview -->
+      <div class="section-header">
+        <span class="section-title">📍 Nearby Vendors</span>
+        <button class="see-all" onclick="goTo('vendors')">View All</button>
+      </div>
+
+      <div style="padding: 0 16px 4px;">
+        <div class="vendor-card" onclick="goTo('vendors')">
+          <div class="vendor-card-top">
+            <div class="vendor-avatar">🏪</div>
+            <div class="vendor-meta">
+              <h4>AquaPure Supplies</h4>
+              <div class="vendor-dist">📍 0.8 km away</div>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <div class="stars">★★★★★</div>
+                <span style="font-size:11px; color:var(--text-muted);">4.9 (128 reviews)</span>
+                <div class="eta-badge">⚡ 25 min</div>
+              </div>
+            </div>
+          </div>
+          <div class="price-compare">
+            <div class="price-pill"><div class="price-pill-size">20 Ltr</div><div class="price-pill-amt">₹120</div></div>
+            <div class="price-pill"><div class="price-pill-size">15 Ltr</div><div class="price-pill-amt">₹90</div></div>
+            <div class="price-pill"><div class="price-pill-size">10 Ltr</div><div class="price-pill-amt">₹70</div></div>
+            <div class="price-pill"><div class="price-pill-size">5 Ltr</div><div class="price-pill-amt">₹50</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" onclick="goTo('orders')">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2" ry="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        <span>Orders</span>
+      </div>
+      <div class="nav-center" onclick="goTo('order')">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C9.24 2 7 4.24 7 7c0 1.57.73 2.98 1.87 3.88L3 22h18l-5.87-11.12A4.99 4.99 0 0 0 17 7c0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Wallet</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       ORDER SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="order">
+    <!-- Topbar -->
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('home')">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <span class="topbar-title">Order Water</span>
+      <button class="icon-btn" onclick="showToast('🛒 2 items in cart')">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="badge">2</span>
+      </button>
+    </div>
+
+    <div class="order-content scroll-pad">
+      <!-- Address -->
+      <div class="address-card">
+        <div class="addr-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="addr-info">
+          <strong>Home</strong>
+          <span>123, Green Park, New Delhi - 110016</span>
+        </div>
+        <button class="change-btn">Change</button>
+      </div>
+
+      <!-- Bottle Selection -->
+      <div class="section-label">Select Bottle Size</div>
+      <div class="bottle-row" id="orderBottles" style="margin-bottom:20px; padding:4px 0 8px;"></div>
+
+      <!-- Quantity -->
+      <div class="qty-section">
+        <div>
+          <div class="qty-label">Select Quantity</div>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <span class="qty-num" id="qtyNum">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <div class="qty-total">
+          <span class="total-label">Total</span>
+          <span class="total-val" id="orderTotal">₹120</span>
+        </div>
+      </div>
+
+      <!-- Add-ons -->
+      <div class="section-label">Add-ons</div>
+      <div class="addon-card">
+        <div class="addon-img">🔧</div>
+        <div class="addon-info">
+          <strong>Water Pump</strong>
+          <span class="addon-price">₹150</span>
+          <small>Easy water dispensing</small>
+        </div>
+        <div class="checkbox-neu" id="pumpCheck" onclick="toggleCheck('pumpCheck')"></div>
+      </div>
+
+      <!-- Delivery Instructions -->
+      <div class="section-label">Delivery Instructions <span style="font-size:12px; color:var(--text-muted); font-weight:400;">(Optional)</span></div>
+      <div class="instructions-card">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="flex-shrink:0; margin-top:3px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <textarea placeholder="E.g. Leave at the door, call before delivery..."></textarea>
+      </div>
+
+      <!-- Schedule Delivery -->
+      <div class="section-label">Schedule Delivery</div>
+      <div class="schedule-row">
+        <div class="schedule-option selected" id="schedAsap" onclick="selectSchedule('asap')">
+          <div class="schedule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="schedule-text">
+            <strong>ASAP</strong>
+            <small>Deliver as soon as possible</small>
+          </div>
+          <div class="schedule-radio"><div class="schedule-radio-dot"></div></div>
+        </div>
+        <div class="schedule-option" id="schedSchedule" onclick="selectSchedule('schedule')">
+          <div class="schedule-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="schedule-text">
+            <strong>Schedule</strong>
+            <small>Choose date &amp; time</small>
+          </div>
+          <div class="schedule-radio"><div class="schedule-radio-dot"></div></div>
+        </div>
+      </div>
+
+      <!-- Bill Summary -->
+      <div class="bill-card">
+        <div class="bill-title">Bill Summary</div>
+        <div class="bill-row"><span>Item Total</span><span id="billItem">₹120</span></div>
+        <div class="bill-row"><span>Delivery Fee</span><span>₹20</span></div>
+        <div class="bill-divider"></div>
+        <div class="bill-total"><span>Total Amount</span><span id="billTotal">₹140</span></div>
+      </div>
+    </div>
+
+    <!-- Order Bar -->
+    <div class="order-bar">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="secure-badge">
+          <span>Secure Checkout</span>
+          <span>100% Safe Payments</span>
+        </div>
+      </div>
+      <button class="place-order-btn" onclick="placeOrder()">
+        Place Order
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" onclick="goTo('orders')">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2" ry="2"/></svg>
+        <span>Orders</span>
+      </div>
+      <div class="nav-center active" onclick="goTo('order')">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C9.24 2 7 4.24 7 7c0 1.57.73 2.98 1.87 3.88L3 22h18l-5.87-11.12A4.99 4.99 0 0 0 17 7c0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Wallet</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       ORDERS SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="orders">
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('home')">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <span class="topbar-title">My Orders</span>
+      <button class="icon-btn" onclick="showToast('🔍 Filter options')">
+        <svg class="ic" viewBox="0 0 24 24" fill="#2563EB" stroke="#2563EB" stroke-width="1"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        <span style="font-size:10px; color:var(--blue); font-weight:700; position:absolute; bottom:6px; right:6px;">Filter</span>
+      </button>
+    </div>
+
+    <div class="scroll-pad">
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <div class="filter-tab active" onclick="setOrderTab(this)">All Orders</div>
+        <div class="filter-tab" onclick="setOrderTab(this)">Upcoming</div>
+        <div class="filter-tab" onclick="setOrderTab(this)">Completed</div>
+        <div class="filter-tab" onclick="setOrderTab(this)">Cancelled</div>
+      </div>
+
+      <!-- Order List -->
+      <div class="order-list">
+        <!-- Order 1 -->
+        <div class="order-card" onclick="showToast('📦 Order #ORD12345 details')">
+          <div class="order-bottle-thumb">
+            <svg width="40" height="60" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="6" rx="3" fill="#1d4ed8"/><rect x="18" y="5" width="24" height="10" rx="4" fill="rgba(147,197,253,0.9)"/><rect x="8" y="14" width="44" height="70" rx="10" fill="url(#bG1)"/><rect x="10" y="50" width="40" height="32" rx="8" fill="rgba(37,99,235,0.3)"/><rect x="12" y="22" width="36" height="40" rx="5" fill="rgba(255,255,255,0.8)"/><defs><linearGradient id="bG1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="100%" stop-color="rgba(147,197,253,0.7)"/></linearGradient></defs></svg>
+            <div class="order-bottle-label">20 Ltr</div>
+          </div>
+          <div class="order-details">
+            <div class="order-id-row">
+              <span class="order-id">Order ID #ORD12345</span>
+              <span class="status-badge status-upcoming">Upcoming</span>
+            </div>
+            <div class="order-meta">
+              <svg class="ic-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              24 May, 2024
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; margin-left:22px;">Tomorrow, 10:00 AM – 12:00 PM</div>
+            <div class="order-meta">
+              <svg class="ic-sm" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Home
+            </div>
+            <div class="order-addr" style="margin-left:22px;">123, Green Park, New Delhi - 110016</div>
+            <div class="order-footer">20 Ltr &nbsp;|&nbsp; Qty: 1 &nbsp;|&nbsp; <strong>Total: ₹120</strong></div>
+          </div>
+          <div class="order-arrow">›</div>
+        </div>
+
+        <!-- Order 2 -->
+        <div class="order-card" onclick="showToast('✅ Order #ORD12312 completed')">
+          <div class="order-bottle-thumb">
+            <svg width="40" height="60" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="6" rx="3" fill="#1d4ed8"/><rect x="18" y="5" width="24" height="10" rx="4" fill="rgba(147,197,253,0.9)"/><rect x="8" y="14" width="44" height="70" rx="10" fill="url(#bG2)"/><rect x="10" y="40" width="40" height="42" rx="8" fill="rgba(37,99,235,0.3)"/><rect x="12" y="22" width="36" height="40" rx="5" fill="rgba(255,255,255,0.8)"/><defs><linearGradient id="bG2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="100%" stop-color="rgba(147,197,253,0.7)"/></linearGradient></defs></svg>
+            <div class="order-bottle-label">15 Ltr</div>
+          </div>
+          <div class="order-details">
+            <div class="order-id-row">
+              <span class="order-id">Order ID #ORD12312</span>
+              <span class="status-badge status-completed">Completed</span>
+            </div>
+            <div class="order-meta">📅 22 May, 2024</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; margin-left:22px;">Delivered at 11:20 AM</div>
+            <div class="order-meta">📍 Home</div>
+            <div class="order-addr" style="margin-left:22px;">123, Green Park, New Delhi - 110016</div>
+            <div class="order-footer">15 Ltr &nbsp;|&nbsp; Qty: 2 &nbsp;|&nbsp; <strong>Total: ₹180</strong></div>
+          </div>
+          <div class="order-arrow">›</div>
+        </div>
+
+        <!-- Order 3 -->
+        <div class="order-card" onclick="showToast('✅ Order #ORD12210 completed')">
+          <div class="order-bottle-thumb">
+            <svg width="40" height="60" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="6" rx="3" fill="#1d4ed8"/><rect x="18" y="5" width="24" height="10" rx="4" fill="rgba(147,197,253,0.9)"/><rect x="8" y="14" width="44" height="70" rx="10" fill="url(#bG3)"/><rect x="10" y="30" width="40" height="52" rx="8" fill="rgba(37,99,235,0.3)"/><rect x="12" y="22" width="36" height="40" rx="5" fill="rgba(255,255,255,0.8)"/><defs><linearGradient id="bG3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="100%" stop-color="rgba(147,197,253,0.7)"/></linearGradient></defs></svg>
+            <div class="order-bottle-label">10 Ltr</div>
+          </div>
+          <div class="order-details">
+            <div class="order-id-row">
+              <span class="order-id">Order ID #ORD12210</span>
+              <span class="status-badge status-completed">Completed</span>
+            </div>
+            <div class="order-meta">📅 18 May, 2024</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; margin-left:22px;">Delivered at 09:15 AM</div>
+            <div class="order-meta">📍 Office</div>
+            <div class="order-addr" style="margin-left:22px;">45, Sector 2, Noida - 201301</div>
+            <div class="order-footer">10 Ltr &nbsp;|&nbsp; Qty: 1 &nbsp;|&nbsp; <strong>Total: ₹70</strong></div>
+          </div>
+          <div class="order-arrow">›</div>
+        </div>
+
+        <!-- Order 4 -->
+        <div class="order-card" onclick="showToast('❌ Order #ORD12101 was cancelled')">
+          <div class="order-bottle-thumb" style="background:linear-gradient(135deg,#fee2e2,#fecaca);">
+            <svg width="40" height="60" viewBox="0 0 60 90"><rect x="22" y="0" width="16" height="6" rx="3" fill="#1d4ed8"/><rect x="18" y="5" width="24" height="10" rx="4" fill="rgba(147,197,253,0.9)"/><rect x="8" y="14" width="44" height="70" rx="10" fill="rgba(200,200,220,0.5)"/><rect x="12" y="22" width="36" height="40" rx="5" fill="rgba(255,255,255,0.7)"/></svg>
+            <div class="order-bottle-label" style="color:var(--red);">20 Ltr</div>
+          </div>
+          <div class="order-details">
+            <div class="order-id-row">
+              <span class="order-id">Order ID #ORD12101</span>
+              <span class="status-badge status-cancelled">Cancelled</span>
+            </div>
+            <div class="order-meta">📅 16 May, 2024</div>
+            <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; margin-left:22px;">Cancelled at 08:30 AM</div>
+            <div class="order-meta">📍 Home</div>
+            <div class="order-addr" style="margin-left:22px;">123, Green Park, New Delhi - 110016</div>
+            <div class="order-footer">20 Ltr &nbsp;|&nbsp; Qty: 1 &nbsp;|&nbsp; <strong>Total: ₹120</strong></div>
+          </div>
+          <div class="order-arrow">›</div>
+        </div>
+      </div>
+
+      <!-- Help Bar -->
+      <div class="help-bar">
+        <div class="help-left">
+          <div class="help-icon">🎧</div>
+          <div>
+            <strong>Need Help?</strong>
+            <small>Our support team is here to help you.</small>
+          </div>
+        </div>
+        <button class="contact-btn" onclick="showToast('📞 Calling support...')">
+          💬 Contact Us
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div>
+      <div class="nav-item active" onclick="goTo('orders')">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2" ry="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        <span>Orders</span>
+      </div>
+      <div class="nav-center" onclick="goTo('order')">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C9.24 2 7 4.24 7 7c0 1.57.73 2.98 1.87 3.88L3 22h18l-5.87-11.12A4.99 4.99 0 0 0 17 7c0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Wallet</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       WALLET SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="wallet">
+    <div class="topbar">
+      <span class="topbar-title">Wallet</span>
+      <button class="icon-btn" onclick="showToast('📄 Transaction history')">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </button>
+    </div>
+
+    <div class="scroll-pad">
+      <!-- Wallet Hero -->
+      <div class="wallet-hero">
+        <div>
+          <div class="wallet-label">
+            Total Balance
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="wallet-amount">₹560.00</div>
+          <div class="wallet-sub">Wallet Balance · ₹560.00</div>
+          <button class="wallet-add-btn" onclick="showToast('💳 Add Money to Wallet')">+ Add Money</button>
+        </div>
+        <div class="wallet-3d-icon">👛</div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="wallet-actions">
+        <div class="wallet-action" onclick="showToast('💳 Add Money')">
+          <div class="wallet-action-icon">💳</div>
+          <span>Add Money</span>
+        </div>
+        <div class="wallet-action" onclick="showToast('📤 Send Money')">
+          <div class="wallet-action-icon">📤</div>
+          <span>Send Money</span>
+        </div>
+        <div class="wallet-action" onclick="showToast('📋 Transaction History')">
+          <div class="wallet-action-icon">📋</div>
+          <span>Transaction History</span>
+        </div>
+        <div class="wallet-action" onclick="showToast('🎟️ Redeem Voucher')">
+          <div class="wallet-action-icon">🎟️</div>
+          <span>Redeem Voucher</span>
+        </div>
+      </div>
+
+      <!-- Promo Banner -->
+      <div class="promo-banner">
+        <div style="font-size:36px;">💧</div>
+        <div class="promo-text">
+          <strong>Add money to your wallet for</strong>
+          <span>Faster Checkout &amp; Easy Payments.</span>
+        </div>
+        <button class="close-btn" onclick="this.parentElement.style.display='none'">✕</button>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="section-header">
+        <span class="section-title">Recent Transactions</span>
+        <button class="see-all" onclick="showToast('📋 Full transaction history')">View All</button>
+      </div>
+
+      <div class="txn-list">
+        <div class="txn-card">
+          <div class="txn-icon">💳</div>
+          <div class="txn-info">
+            <strong>Added Money</strong>
+            <div class="txn-sub">UPI · raj***@upi</div>
+            <div class="txn-sub">24 May 2024, 10:30 AM</div>
+          </div>
+          <div class="txn-amount">
+            <div class="amt credit">+ ₹500.00</div>
+            <div class="txn-status">
+              <span style="width:6px; height:6px; border-radius:50%; background:var(--green);"></span>
+              Success
+            </div>
+          </div>
+        </div>
+
+        <div class="txn-card">
+          <div class="txn-icon" style="background:var(--blue-pale);">🫙</div>
+          <div class="txn-info">
+            <strong>Order Payment</strong>
+            <div class="txn-sub">Order #ORD12345</div>
+            <div class="txn-sub">24 May 2024, 10:12 AM</div>
+          </div>
+          <div class="txn-amount">
+            <div class="amt debit">− ₹120.00</div>
+            <div class="txn-status">
+              <span style="width:6px; height:6px; border-radius:50%; background:var(--green);"></span>
+              Success
+            </div>
+          </div>
+        </div>
+
+        <div class="txn-card">
+          <div class="txn-icon">💳</div>
+          <div class="txn-info">
+            <strong>Added Money</strong>
+            <div class="txn-sub">UPI · rah***@upi</div>
+            <div class="txn-sub">20 May 2024, 04:45 PM</div>
+          </div>
+          <div class="txn-amount">
+            <div class="amt credit">+ ₹300.00</div>
+            <div class="txn-status">
+              <span style="width:6px; height:6px; border-radius:50%; background:var(--green);"></span>
+              Success
+            </div>
+          </div>
+        </div>
+
+        <div class="txn-card">
+          <div class="txn-icon" style="background:var(--blue-pale);">🫙</div>
+          <div class="txn-info">
+            <strong>Order Payment</strong>
+            <div class="txn-sub">Order #ORD12312</div>
+            <div class="txn-sub">19 May 2024, 11:20 AM</div>
+          </div>
+          <div class="txn-amount">
+            <div class="amt debit">− ₹70.00</div>
+            <div class="txn-status">
+              <span style="width:6px; height:6px; border-radius:50%; background:var(--green);"></span>
+              Success
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invite -->
+      <div class="invite-card">
+        <div class="invite-left">
+          <div class="invite-icon">🎁</div>
+          <div>
+            <strong>Invite Friends &amp; Earn Rewards</strong>
+            <small>Invite your friends and get ₹50 in your wallet.</small>
+          </div>
+        </div>
+        <button class="invite-btn" onclick="showToast('🔗 Share referral link copied!')">Invite Now</button>
+      </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" onclick="goTo('orders')">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2" ry="2"/></svg>
+        <span>Orders</span>
+      </div>
+      <div class="nav-center" onclick="goTo('order')">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C9.24 2 7 4.24 7 7c0 1.57.73 2.98 1.87 3.88L3 22h18l-5.87-11.12A4.99 4.99 0 0 0 17 7c0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
+      </div>
+      <div class="nav-item active" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Wallet</span>
+      </div>
+      <div class="nav-item" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       PROFILE SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="profile">
+    <div class="topbar">
+      <span class="topbar-title">Profile</span>
+      <button class="icon-btn" onclick="showToast('⚙️ Settings')">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <div class="scroll-pad">
+      <!-- Profile Card -->
+      <div class="profile-card">
+        <div class="profile-top">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar">🧑</div>
+            <div class="profile-cam">📷</div>
+          </div>
+          <div class="profile-info">
+            <h3>Rahul Sharma</h3>
+            <p>+91 98765 43210</p>
+            <p style="font-size:11px;">rahulsharma@email.com</p>
+            <div class="verified-badge">✓ Verified</div>
+          </div>
+          <div class="profile-arrow">›</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-icon">🛍️</div>
+            <div class="stat-value">24</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">💧</div>
+            <div class="stat-value">480 Ltr</div>
+            <div class="stat-label">Water Delivered</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-value">May 2024</div>
+            <div class="stat-label">Member Since</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">₹</div>
+            <div class="stat-value">₹2,560</div>
+            <div class="stat-label">Total Spent</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Addresses -->
+      <div class="addresses-section">
+        <div class="section-row">
+          <span class="section-title">My Addresses</span>
+          <button class="see-all">View All</button>
+        </div>
+
+        <div class="addr-card">
+          <div class="addr-house-icon">🏠</div>
+          <div class="addr-card-info">
+            <strong>Home <span class="default-tag">Default</span></strong>
+            <span>123, Green Park, New Delhi - 110016</span>
+            <span>+91 98765 43210</span>
+          </div>
+          <div style="color:var(--text-muted); font-size:18px;">›</div>
+        </div>
+
+        <button class="add-address-btn" onclick="showToast('📍 Add New Address')">
+          ＋ Add New Address
+        </button>
+      </div>
+
+      <!-- Menu -->
+      <div class="menu-card">
+        <div class="menu-item" onclick="goTo('orders')">
+          <div class="menu-icon">📋</div>
+          <span class="menu-label">My Orders</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="goTo('wallet')">
+          <div class="menu-icon">👛</div>
+          <span class="menu-label">My Wallet</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="showToast('💳 Payment Methods')">
+          <div class="menu-icon">💳</div>
+          <span class="menu-label">Payment Methods</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="showToast('🎁 Refer & Earn ₹50!')">
+          <div class="menu-icon">🎁</div>
+          <span class="menu-label">Refer &amp; Earn</span>
+          <span class="menu-badge">Earn ₹50</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="showToast('🔔 Notification Settings')">
+          <div class="menu-icon">🔔</div>
+          <span class="menu-label">Notifications</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="showToast('🎧 Help & Support')">
+          <div class="menu-icon">🎧</div>
+          <span class="menu-label">Help &amp; Support</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" onclick="showToast('ℹ️ About AQUA CONNECT')">
+          <div class="menu-icon">ℹ️</div>
+          <span class="menu-label">About Us</span>
+          <span class="menu-arrow">›</span>
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <button class="logout-btn" onclick="goTo('splash')">
+        <span>↪</span> Logout
+      </button>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </div>
+      <div class="nav-item" onclick="goTo('orders')">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2" ry="2"/></svg>
+        <span>Orders</span>
+      </div>
+      <div class="nav-center" onclick="goTo('order')">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C9.24 2 7 4.24 7 7c0 1.57.73 2.98 1.87 3.88L3 22h18l-5.87-11.12A4.99 4.99 0 0 0 17 7c0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
+      </div>
+      <div class="nav-item" onclick="goTo('wallet')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Wallet</span>
+      </div>
+      <div class="nav-item active" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       VENDORS SCREEN
+  ════════════════════════════════ -->
+  <div class="screen" id="vendors">
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('home')">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <span class="topbar-title">Water Vendors</span>
+      <button class="icon-btn" onclick="showToast('🔍 Search vendors')">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </div>
+
+    <div class="scroll-pad">
+      <!-- Filter chips -->
+      <div class="vendor-filter-row">
+        <button class="vendor-filter-chip active" onclick="setVendorFilter(this)">All</button>
+        <button class="vendor-filter-chip" onclick="setVendorFilter(this)">⚡ Fastest</button>
+        <button class="vendor-filter-chip" onclick="setVendorFilter(this)">⭐ Top Rated</button>
+        <button class="vendor-filter-chip" onclick="setVendorFilter(this)">💰 Best Price</button>
+        <button class="vendor-filter-chip" onclick="setVendorFilter(this)">📦 In Stock</button>
+      </div>
+
+      <div class="nearby-section">
+        <div class="nearby-label">
+          <svg width="14" height="14" v
